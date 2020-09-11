@@ -50,6 +50,13 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
+        #start at the root
+        fn(self.value)
+        if self.left is not None: 
+            self.left.for_each(fn)
+        if self.right is not None:
+            self.right.for_each(fn)
+
         if self.value: 
             fn(self.value)
             if self.right:
@@ -79,12 +86,12 @@ class BSTNode:
             self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
-    # in an iterative breadth first traversal
+    # in an iterative breadth first traversal. goes down layer by layer . fifo 
     def bft_print(self):
         queue = []
         queue.append(self)
         while len(queue):
-            current = queue.pop()
+            current = queue.pop(0)
             print(current.value)
             if current.left:
                 queue.append(current.left)
@@ -92,8 +99,17 @@ class BSTNode:
                 queue.append(current.right)
 
     # Print the value of every node, starting with the given node,
-    # in an iterative depth first traversal
+    # in an iterative depth first traversal. goes down one whole leg before going down the next whole leg 
     def dft_print(self):
+        stack = []
+        stack.append(self)
+        while len(stack):
+            current = stack.pop()
+            print(current.value)
+            if current.left:
+                stack.append(current.left)
+            if current.right:
+                stack.append(current.right)
         
 
     # Stretch Goals -------------------------
@@ -101,14 +117,30 @@ class BSTNode:
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self):
-        pass
+        if self is not None:
+            print(self.value)
+            if self.left:
+                self.left.pre_order_dft()
+            if self.right:
+                self.right.pre_order_dft()
+
 
     # Print Post-order recursive DFT
     def post_order_dft(self):
-        pass
+        if self is not None:
+            if self.left:
+                self.left.post_order_dft()
+            if self.right:
+                self.right.post_order_dft()
+            print(self.value)
 
     def in_order_dft(self):
-        pass
+        if self is not None:
+            if self.left:
+                self.left.in_order_dft()
+            print(self.value)
+            if self.right:
+                self.right.in_order_dft()
 
 """
 This code is necessary for testing the `print` methods
